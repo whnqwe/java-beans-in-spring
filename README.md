@@ -58,9 +58,82 @@
 
 
 
+###### Java Beans事件监听
+
+> - 属性变化监听器（PropertyChangeListener）
+
+> - 属性变化事件（PropertyChangeEvent）
+>
+> > 事件源（Source）
+> >
+> > 属性名称（PropertyName）
+> >
+> > 变化前值（OldValue）
+> >
+> > 变化后值（NewValue）
+
+
+
+###### 代码演示
+
+> 属性 与 字段的区别：属性是带操作方法的字段。
+>
+> > readMethod  
+> >
+> > writeMethod
+> >
+> > 不一定都出现，但必须出现一个
+>
+> java bean get/set 方法不一定要成对的出现
+
+```java
+public class User {
+    private long id;
+    private String name;
+    ...get/set...
+}
+```
+
+```java
+
+        BeanInfo beanInfo = Introspector.getBeanInfo(User.class,Object.class);
+       // BeanInfo beanInfo = Introspector.getBeanInfo(User.class);
+
+
+        /**Bean描述符（BeanDescriptor）
+         * * A BeanDescriptor provides global information about a "bean",
+         * including its Java class, its displayName, etc.
+         */
+        BeanDescriptor beanDescriptor = beanInfo.getBeanDescriptor();
+        System.out.println(beanDescriptor);
+
+
+        /**
+         *
+         *  方法描述符（MethodDescriptor）
+         */
+        MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
+        Stream.of(methodDescriptors).forEach(System.out::println);
+
+
+        /**
+         *属性描述符（PropertyDescriptor）
+         */
+        PropertyDescriptor[] propertyDescriptors  = beanInfo.getPropertyDescriptors();
+        Stream.of(propertyDescriptors).forEach(System.out::println);
+```
 
 
 
 
 
+##### Spring Bean属性处理
+
+
+
+> 属性修改器（PropertyEditor）
+> 属性修改器注册（PropertyEditorRegistry
+>
+> PropertyEditor注册器（PropertyEditorRegistrar）
+> 自定义PropertyEditor配置器（CustomEditorConfigurer）
 
